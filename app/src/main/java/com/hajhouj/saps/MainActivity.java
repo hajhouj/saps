@@ -1,5 +1,7 @@
 package com.hajhouj.saps;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         btnToggle.setOnClickListener(v -> toggleProxy());
 
         findViewById(R.id.btnClearLogs).setOnClickListener(v -> clearLogs());
+        findViewById(R.id.btnCopyLogs).setOnClickListener(v -> copyLogs());
         findViewById(R.id.btnAbout).setOnClickListener(v -> showAbout());
     }
 
@@ -147,6 +150,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void clearLogs() {
         tvLogs.setText("");
+    }
+
+    private void copyLogs() {
+        String logs = tvLogs.getText().toString();
+        if (logs.isEmpty()) {
+            Toast.makeText(this, "No logs to copy", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("SAPS Proxy Logs", logs);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(this, "Logs copied to clipboard", Toast.LENGTH_SHORT).show();
     }
 
     private void showAbout() {

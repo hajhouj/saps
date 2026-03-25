@@ -145,6 +145,14 @@
                     android:textStyle="bold" />
 
                 <Button
+                    android:id="@+id/btnCopyLogs"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Copy"
+                    android:textSize="12sp" />
+
+                <Button
                     android:id="@+id/btnClearLogs"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
