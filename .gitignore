@@ -2,14 +2,16 @@
 .gradle/
 build/
 
-# Keep Gradle wrapper for CI/CD (must be before gradle-* ignore)
+# Gradle wrapper - must be committed for CI/CD
+!gradle/
 !gradle/wrapper/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
 !gradlew
 !gradlew.bat
 
-# Ignore downloaded Gradle distributions but not wrapper
-gradle-*
-!gradle-wrapper.jar
+# Ignore downloaded Gradle distributions (e.g., gradle-8.10/)
+gradle-[0-9]*
 
 # Local configuration file (sdk path, etc)
 local.properties
