@@ -1,0 +1,165 @@
+SAPS - Simple Android Proxy Server
+==================================
+
+A lightweight HTTP/HTTPS proxy server for Android with a user-friendly interface.
+
+Bundle ID: com.hajhouj.saps
+
+
+Features
+--------
+
+- HTTP/HTTPS proxy support (including CONNECT method for SSL/TLS tunnels)
+- Configurable proxy port
+- Real-time connection logging
+- Foreground service with persistent notification
+- Material Design UI
+- Optimized for performance with large buffers and socket tuning
+- Proper handling of chunked transfer encoding
+- Support for keep-alive connections
+
+
+Project Structure
+-----------------
+
+saps/
+├── app/
+│   ├── build.gradle              # App-level build configuration
+│   ├── proguard-rules.pro        # ProGuard configuration
+│   └── src/main/
+│       ├── AndroidManifest.xml   # App manifest with permissions
+│       ├── java/com/hajhouj/saps/
+│       │   ├── MainActivity.java # Main UI activity
+│       │   ├── ProxyService.java # Foreground service for proxy
+│       │   └── ProxyServer.java  # Core HTTP/HTTPS proxy implementation
+│       └── res/
+│           ├── layout/activity_main.xml   # Main UI layout
+│           ├── values/
+│           │   ├── strings.xml   # App strings
+│           │   ├── colors.xml    # Color definitions
+│           │   └── themes.xml    # App theme
+│           └── drawable/         # App icons
+├── build.gradle                  # Project-level build configuration
+├── settings.gradle               # Project settings
+├── gradle.properties             # Gradle properties
+└── README                        # This file
+
+
+Requirements
+------------
+
+- Android SDK 24+ (Android 7.0+)
+- Target SDK 34
+- Java 8+
+- Gradle 8.10+
+
+
+Building
+--------
+
+1. Set ANDROID_HOME environment variable:
+   export ANDROID_HOME=/path/to/android/sdk
+
+2. Build debug APK:
+   ./gradlew assembleDebug
+
+3. Install on connected device:
+   adb install -r app/build/outputs/apk/debug/app-debug.apk
+
+
+Usage
+-----
+
+1. Launch the SAPS app on your Android device
+2. Enter a port number (default: 8080)
+3. Tap "Start Proxy"
+4. Note the displayed IP address and port
+5. Configure your browser/device to use the proxy:
+   - HTTP Proxy: <device_ip>:<port>
+   - HTTPS Proxy: <device_ip>:<port>
+6. The app will show real-time logs of proxy activity
+
+
+Permissions
+-----------
+
+The app requires the following permissions:
+- INTERNET: For network communication
+- ACCESS_NETWORK_STATE: To check network status
+- ACCESS_WIFI_STATE: To get device IP address
+- FOREGROUND_SERVICE: To run proxy as a foreground service
+
+
+Technical Details
+-----------------
+
+ProxyServer.java
+- Implements a multi-threaded HTTP/HTTPS proxy server
+- Uses thread pool for handling concurrent connections (10-100 threads)
+- 64KB buffer size for optimal throughput
+- TCP_NODELAY enabled for reduced latency
+- Socket timeouts: 30s read, 10s connect
+- Proper handling of:
+  - HTTP request/response forwarding
+  - HTTPS CONNECT tunneling
+  - Chunked transfer encoding
+  - Content-Length based responses
+  - Connection keep-alive
+
+ProxyService.java
+- Android foreground service for persistent proxy operation
+- Notification channel for service status
+- Binds to MainActivity for UI updates
+- Handles service lifecycle and cleanup
+
+MainActivity.java
+- Material Design UI with card-based layout
+- Port configuration input
+- Start/Stop proxy control
+- Real-time log display with timestamps
+- Device IP address display
+- About dialog
+
+
+Performance Optimizations
+-------------------------
+
+1. Large buffer sizes (64KB) for better throughput
+2. TCP_NODELAY to disable Nagle's algorithm
+3. Socket keep-alive for persistent connections
+4. Dynamic thread pool with CallerRunsPolicy
+5. Buffered streams for efficient I/O
+6. Proper chunked encoding handling
+7. Connection reuse with SO_REUSEADDR
+
+
+Troubleshooting
+---------------
+
+NS_ERROR_CORRUPTED_CONTENT:
+- Fixed by proper HTTP response header parsing
+- Proper handling of chunked transfer encoding
+- Correct Content-Length handling
+
+Slow proxy performance:
+- Optimized with larger buffers (64KB)
+- TCP_NODELAY enabled
+- Increased thread pool size
+- Socket buffer tuning
+
+Build issues:
+- Ensure Java 23+ compatibility with Gradle 8.10+
+- Set ANDROID_HOME environment variable
+- Use provided Gradle wrapper or install compatible version
+
+
+License
+-------
+
+See LICENSE file for details.
+
+
+Author
+------
+
+com.hajhouj.saps

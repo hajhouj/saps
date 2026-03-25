@@ -1,0 +1,3 @@
+# ProGuard rules for SAPS
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Service

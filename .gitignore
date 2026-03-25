@@ -1,6 +1,12 @@
 # Gradle files
 .gradle/
 build/
+gradle-*
+
+# Keep Gradle wrapper for CI/CD
+!gradle/wrapper/
+!gradlew
+!gradlew.bat
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -15,6 +21,7 @@ captures/
 *.aab
 *.apk
 output-metadata.json
+app/build/
 
 # IntelliJ
 *.iml
@@ -32,3 +39,16 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# IDE/Editor specific
+.qoder/
